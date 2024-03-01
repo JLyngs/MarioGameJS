@@ -19,20 +19,51 @@ export default class Player {
 
         this.speedY = 6;
         this.speedX = 6;
-
+        
         this.isJumping = false;
         this.jumpCount = 0
-
-        this.jumpVelocity = 0;
-        this.maxJumpVelocity = -12;
-        
-
-
-        
-
-
+        this.doubleJump = true;
         
         
+        
+        
+        
+        
+        
+        
+    }
+    update() {
+    
+    
+        if (this.rightPressed) {
+            this.x += this.speedX;
+            this.velocityX = 1;
+            
+        } else if (this.leftPressed) {
+            this.x -= this.speedX;
+            this.velocityX = -1;
+        }
+    
+    
+        if (!this.isJumping) {
+            this.y += this.speedY; /* Gravity fall */
+        } else {
+            this.y += this.jumpVelocity;
+            this.jumpVelocity += 0.5; /* Jump */
+    
+            if (this.jumpVelocity >= 12) { /* "time" before ability to jump reset */
+                this.isJumping = false;
+            }
+        }
+    
+        if (this.doubleJump && this.jumpCount < 2 && this.isJumping) {
+            if (this.jumpPressed) {
+                this.y -= this.jumpVelocity;
+                this.jumpVelocity -= 2;
+                this.jumpCount++;
+            }
+        }
+    
     }
 
 
@@ -135,8 +166,12 @@ export default class Player {
                     break;
                 case "Space":
                     if (!this.isJumping) {
-                        this.jumpVelocity = this.maxJumpVelocity;
                         this.isJumping = true;
+                        this.jumpVelocity = -10;
+                        this.jumpCount = 1;
+                    } else if (this.doubleJump && this.jumpCount < 2) {
+                        this.jumpVelocity = -10;
+                        this.jumpCount++
                     }
                     break;
                 case "KeyD":
@@ -152,7 +187,7 @@ export default class Player {
     #keyup = (event) => {
         switch (event.code) {
             case "ArrowRight":
-                this.rightPressed = false;
+                this.rightPressed =false;
                 break;
             case "ArrowLeft":
                 this.leftPressed = false;
@@ -165,31 +200,6 @@ export default class Player {
         }
     };
 
-    update() {
-
-
-        if (this.rightPressed) {
-            this.x += this.speedX;
-            this.velocityX = 1;
-            
-        } else if (this.leftPressed) {
-            this.x -= this.speedX;
-            this.velocityX = -1;
-        }
-
-
-        if (!this.isJumping) {
-            this.y += this.speedY; /* Gravity fall */
-        } else {
-            this.y += this.jumpVelocity;
-            this.jumpVelocity += 0.5;   /* Jump */
-
-            if (this.jumpVelocity >= 12 || this.jumpCount) { /* "time" before ability to jump reset */
-                this.isJumping = false;
-            }
-        }
-
-    }
 
 
 }
