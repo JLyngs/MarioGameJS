@@ -42,6 +42,7 @@ function game() {
         player.x = canvas.width - Player.width;
     }
 
+
     
 }
 

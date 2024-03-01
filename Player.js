@@ -21,9 +21,14 @@ export default class Player {
         this.speedX = 6;
 
         this.isJumping = false;
+        this.jumpCount = 0
 
         this.jumpVelocity = 0;
         this.maxJumpVelocity = -12;
+        
+
+
+        
 
 
         
@@ -130,8 +135,8 @@ export default class Player {
                     break;
                 case "Space":
                     if (!this.isJumping) {
-                        this.isJumping = true;
                         this.jumpVelocity = this.maxJumpVelocity;
+                        this.isJumping = true;
                     }
                     break;
                 case "KeyD":
@@ -147,7 +152,7 @@ export default class Player {
     #keyup = (event) => {
         switch (event.code) {
             case "ArrowRight":
-                this.rightPressed =false;
+                this.rightPressed = false;
                 break;
             case "ArrowLeft":
                 this.leftPressed = false;
@@ -157,7 +162,6 @@ export default class Player {
                 break;
             case "Space":
                 this.jumpPressed = false;
-                break;
         }
     };
 
@@ -175,14 +179,13 @@ export default class Player {
 
 
         if (!this.isJumping) {
-            this.y += this.speedY;
+            this.y += this.speedY; /* Gravity fall */
         } else {
             this.y += this.jumpVelocity;
-            this.jumpVelocity += 0.5;
+            this.jumpVelocity += 0.5;   /* Jump */
 
-            if (this.jumpVelocity >= 4) {
+            if (this.jumpVelocity >= 12 || this.jumpCount) { /* "time" before ability to jump reset */
                 this.isJumping = false;
-                this.jumpVelocity = -5;
             }
         }
 
