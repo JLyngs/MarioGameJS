@@ -2,10 +2,9 @@ import PlayerStates from "./PlayerStates.js";
 import SpriteAnimation from "./SpriteAnimation.js";
 
 export default class Player {
-    constructor(ctx, canvasWidth, canvasHeight) {
-        this.ctx = ctx;
-        this.canvasWidth = canvasWidth
-        this.canvasHeight = canvasHeight
+    constructor(gameWidth, gameHeight) {
+        this.gameWidth = gameWidth
+        this.gameHeight = gameHeight
         this.state = PlayerStates.idle;
         this.#createAnimations();
         document.addEventListener("keydown", this.#keydown);
@@ -14,8 +13,12 @@ export default class Player {
         Player.height = 64
         Player.width = 40
 
-        this.x = 100;
-        this.y = 400;
+        this.x = 450;
+        this.y = 800;
+
+        let gravity = 0.06;
+        let yVelocity = 2;
+        let xVelocity = 0;
 
         this.speedY = 6;
         this.speedX = 6;
@@ -23,6 +26,21 @@ export default class Player {
         this.isJumping = false;
         this.jumpCount = 0
         this.doubleJump = true;
+
+        // Update player's position
+        yVelocity += gravity;
+        Player.x += xVelocity;
+        Player.y += yVelocity;
+
+        if (Player.y > this.canvasHeight - Player.height) {
+            Player.y = this.canvasHeight - Player.height;
+            yVelocity = 0;
+        }
+
+
+        if (Player.x < 0) {
+            Player.x = 0;
+        }
         
         
         
@@ -85,8 +103,11 @@ export default class Player {
 
 
         ctx.drawImage(image, -image.width / 2, -image.height / 2);
+        
 
         ctx.restore();
+        
+        
         
         this.update()
     }

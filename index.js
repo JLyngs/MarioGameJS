@@ -1,49 +1,49 @@
 import img from "./img.js";
 import Player from "./Player.js";
 
-const canvas = document.createElement("canvas");
-document.body.append(canvas);
-let ctx = canvas.getContext("2d")
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
-canvas.width = 2000 / 2;
-canvas.height = 1200 / 2.5;
+class Background {
+    constructor(gameWidth, gameHeight) {
+        this.gameWidth = gameWidth;
+        this.gameHeight = gameHeight;
+        this.image = document.getElementById('backgroundImage');
+        this.x = 0;
+        this.y = 0;
+        this.width = 1200;
+        this.height = 700;
+        this.speed = 0.5;
+    }
+    draw(context){
+        context.drawImage(this.image, this.x, this.y, this.width, this.height);
+        context.drawImage(this.image, this.x + this.width, this.y, this.width, this.height);
+    }
+    update(){
+        this.x -= this.speed;
+        if (this.x < 0 - this.width) this.x = 0;
+    }
+}
 
+canvas.width = 1200; // Adjust as needed
+canvas.height = 600; // Adjust as needed
 
-const background = img("BG.png");
-const player = new Player();
-
-let gravity = 0.06;
-let yVelocity = 2;
-let xVelocity = 0;
-
-
-
+const player = new Player(canvas.width, canvas.height);
+const background = new Background(canvas.width, canvas.height);
 
 
 function game() {
-    ctx.drawImage(background, 0, 0, 2000, 1200, 0, 0, 2000 / 2, 1200 / 2.5);
-
-    yVelocity += gravity;
-    player.x += xVelocity;
-    player.y += yVelocity;
-
-
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    background.draw(ctx);
+    background.update();
+    // Draw player
     player.draw(ctx);
 
-    if (player.y > canvas.height - Player.height) {
-        player.y = canvas.height - Player.height;
-        yVelocity = 0;
-    }
-    if (player.x < 0){
-        player.x = 0;
-    }
-
-    if (player.x > canvas.width - Player.width) { /*Border Højre */
-        player.x = canvas.width - Player.width;
-    }
 
 
-    
+
+
 }
 
 setInterval(game, 1000 / 60);

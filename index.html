@@ -2,16 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animations</title>
+    <meta name="Mario" content="width=device-width, initial-scale=1.0">
+    <title>Mario</title>
     <style>
         body{
             background-color: rgb(52, 52, 95);
             overflow: hidden;
+            
+        }
+        #canvas {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 5px solid white;
+        }
+        #backgroundImage{
+            display: none;
         }
     </style>
 </head>
 <body>
+    <canvas id="canvas"></canvas>
+    <img id="backgroundImage" src="images/BG.png">
     <script src="index.js" type="module" ></script>
 
 </body>
