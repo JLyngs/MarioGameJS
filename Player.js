@@ -13,12 +13,12 @@ export default class Player {
         Player.height = 64
         Player.width = 40
 
-        this.x = 450;
-        this.y = 800;
+        this.x = 0;
+        this.y = 0;
 
-        let gravity = 0.06;
-        let yVelocity = 2;
-        let xVelocity = 0;
+        this.gravity = 0.06;
+        this.yVelocity = 2;
+        this.xVelocity = 0;
 
         this.speedY = 6;
         this.speedX = 6;
@@ -26,33 +26,12 @@ export default class Player {
         this.isJumping = false;
         this.jumpCount = 0
         this.doubleJump = true;
-
-        // Update player's position
-        yVelocity += gravity;
-        Player.x += xVelocity;
-        Player.y += yVelocity;
-
-        if (Player.y > this.canvasHeight - Player.height) {
-            Player.y = this.canvasHeight - Player.height;
-            yVelocity = 0;
-        }
-
-
-        if (Player.x < 0) {
-            Player.x = 0;
-        }
-        
-        
-        
-        
-        
-        
-        
+                
         
     }
     update() {
-    
-    
+        
+        
         if (this.rightPressed) {
             this.x += this.speedX;
             this.velocityX = 1;
@@ -80,6 +59,23 @@ export default class Player {
                 this.jumpVelocity -= 2;
                 this.jumpCount++;
             }
+        }
+        // Update player's position
+        this.yVelocity += this.gravity;
+        this.x += this.xVelocity;
+        this.y += this.yVelocity;
+
+        if (this.y > this.gameHeight - Player.height) {
+            this.y = this.gameHeight - Player.height;
+            this.yVelocity = 0;
+        }
+
+        if (this.x > this.gameWidth - Player.width) {
+            this.x = this.gameWidth - Player.width;
+            this.xVelocity = 0;
+        }
+        if (this.x < 0) {
+            this.x = 0;
         }
     
     }
@@ -117,8 +113,8 @@ export default class Player {
             this.state = PlayerStates.dead;
         } else if (this.jumpPressed) {
             this.state = PlayerStates.jump;
-        } else if (this.runPressed) {
-            this.state = PlayerStates.run;
+/*         } else if (this.runPressed) {
+            this.state = PlayerStates.run; */
         } else if (this.rightPressed || this.leftPressed) {
             this.state = PlayerStates.walk;
         } else {
@@ -140,13 +136,13 @@ export default class Player {
             PlayerStates.walk,
         );
 
-        this.runAnimatinon = new SpriteAnimation(
+/*         this.runAnimatinon = new SpriteAnimation(
             "Run (?).png",
             8,
             6,
             PlayerStates.run,
             
-        );
+        ); */
         this.jumpAnimation = new SpriteAnimation(
             "Jump (?).png",
             1,
@@ -164,7 +160,7 @@ export default class Player {
         this.animations = [
             this.idleAnimation,
             this.walkAnimation,
-            this.runAnimatinon,
+/*             this.runAnimatinon, */
             this.jumpAnimation,
             this.deadAnimation,
         ];
@@ -182,9 +178,9 @@ export default class Player {
                 case "ArrowLeft":
                     this.leftPressed = true;
                     break;
-                case "ShiftLeft":
+/*                 case "ShiftLeft":
                     this.runPressed = true;
-                    break;
+                    break; */
                 case "Space":
                     if (!this.isJumping) {
                         this.isJumping = true;
@@ -213,9 +209,9 @@ export default class Player {
             case "ArrowLeft":
                 this.leftPressed = false;
                 break;
-            case "ShiftLeft":
+/*             case "ShiftLeft":
                 this.runPressed = false;
-                break;
+                break; */
             case "Space":
                 this.jumpPressed = false;
         }
