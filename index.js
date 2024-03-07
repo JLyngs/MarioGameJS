@@ -22,6 +22,8 @@ window.addEventListener('load', function(){
             context.drawImage(this.image, this.x + this.width, this.y, this.width, this.height);
         }
         update(){
+            
+            this.x -= this.speed /2;
 
             if (this.x <= -this.width) {
                 this.x += this.width;
@@ -31,7 +33,7 @@ window.addEventListener('load', function(){
                 this.x -= player.speedX;
             }
 
-            if (player.leftPressed && this.x < 0) {
+            if (player.leftPressed && this.x < -5) {
                 this.x += player.speedX;
             }
         }
