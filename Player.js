@@ -12,15 +12,16 @@ export default class Player {
 
         Player.height = 64
         Player.width = 40
+        
 
         this.x = 0;
         this.y = 0;
 
-        this.gravity = 0.06;
+        this.gravity = 0.11;
         this.yVelocity = 2;
         this.xVelocity = 0;
 
-        this.speedY = 6;
+        this.speedY = 4;
         this.speedX = 6;
         
         this.isJumping = false;
@@ -48,7 +49,7 @@ export default class Player {
             this.y += this.jumpVelocity;
             this.jumpVelocity += 0.5; /* Jump */
     
-            if (this.jumpVelocity >= 12) { /* "time" before ability to jump reset */
+            if (this.jumpVelocity >= 9) { /* "time" before ability to jump reset */
                 this.isJumping = false;
             }
         }
@@ -103,9 +104,7 @@ export default class Player {
 
         ctx.restore();
         
-        
-        
-        this.update()
+
     }
 
     #setState() {

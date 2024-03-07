@@ -22,8 +22,18 @@ window.addEventListener('load', function(){
             context.drawImage(this.image, this.x + this.width, this.y, this.width, this.height);
         }
         update(){
-            this.x -= this.speed;
-            if (this.x < 0 - this.width) this.x = 0;
+
+            if (this.x <= -this.width) {
+                this.x += this.width;
+            }
+        
+            if (player.rightPressed && this.x < 1) {
+                this.x -= player.speedX;
+            }
+
+            if (player.leftPressed && this.x < 0) {
+                this.x += player.speedX;
+            }
         }
     }
 
@@ -37,8 +47,10 @@ window.addEventListener('load', function(){
     function game() {
         // Clear canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
         background.draw(ctx);
         background.update();
+        player.update();
         // Draw player
         player.draw(ctx);
 
