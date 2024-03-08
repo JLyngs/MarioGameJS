@@ -1,6 +1,7 @@
 import PlayerStates from "./PlayerStates.js";
 import SpriteAnimation from "./SpriteAnimation.js";
 
+
 export default class Player {
     constructor(gameWidth, gameHeight) {
         this.gameWidth = gameWidth
@@ -73,10 +74,11 @@ export default class Player {
 
         if (this.x > this.gameWidth - Player.width) {
             this.x = this.gameWidth - Player.width;
-            this.xVelocity = 0;
+
         }
         if (this.x < 0) {
             this.x = 0;
+            
         }
     
     }
@@ -92,7 +94,7 @@ export default class Player {
 
         ctx.save();
 
-        ctx.translate(this.x + image.width / 2, this.y + image.height / 2);
+        ctx.translate(this.x + image.width / 2, this.y-36 + image.height / 2);
         
         if (this.velocityX < 0) {
             ctx.scale(-1, 1);
